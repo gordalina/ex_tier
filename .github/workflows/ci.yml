@@ -1,0 +1,122 @@
+name: ci
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+on:
+  push:
+    branches: ["*"]
+    tags: ["v*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  test:
+    name: test
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - otp: 23.3
+            elixir: 1.14.1
+          - otp: 24.3
+            elixir: 1.14.1
+          - otp: 25.1
+            elixir: 1.14.1
+    runs-on: ubuntu-20.04
+    env:
+      MIX_ENV: test
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "${{matrix.otp}}"
+          elixir-version: "${{matrix.elixir}}"
+      - name: Install Dependencies
+        run: |
+          mix local.rebar --force
+          mix local.hex --force
+          mix deps.get
+      - name: Compile
+        run: mix compile --warnings-as-errors
+      - name: Check Formatting
+        run: mix format
+      - name: Run Tests
+        run: mix coveralls.json
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: cover/excoveralls.json
+
+  checks:
+    name: static checks
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - otp: 25.1
+            elixir: 1.14.1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "${{matrix.otp}}"
+          elixir-version: "${{matrix.elixir}}"
+      - name: Cache multiple paths
+        uses: actions/cache@v2
+        with:
+          path: priv/plts
+          key: ${{ hashFiles('mix.lock') }}-${{matrix.otp}}-${{matrix.elixir}}
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Run checks
+        run: mix check
+
+  docs:
+    name: docs
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        include:
+          - otp: 25.1
+            elixir: 1.14.1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "${{matrix.otp}}"
+          elixir-version: "${{matrix.elixir}}"
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Generate docs
+        run: |
+          mix docs
+          test -f doc/index.html && echo "doc/index.html exists."
+          test -f doc/ex_tier.epub && echo "doc/ex_tier.epub exists."
+
+  release:
+    if: "startsWith(github.ref, 'refs/tags/v')"
+    name: release
+    strategy:
+      matrix:
+        include:
+          - otp: 25.1
+            elixir: 1.14.1
+    runs-on: ubuntu-20.04
+    needs: [test, checks, docs]
+    env:
+      HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: "${{matrix.otp}}"
+          elixir-version: "${{matrix.elixir}}"
+      - name: Install Dependencies
+        run: |
+          mix local.rebar --force
+          mix local.hex --force
+          mix deps.get
+      - name: Release
+        run: |
+          mix hex.publish --yes
+          mix hex.publish docs --yes
