@@ -14,5 +14,6 @@ defmodule ExTier do
   defdelegate report(params), to: Api.Report
   defdelegate schedule(params), to: Api.Schedule
   defdelegate subscribe(params), to: Api.Subscribe
+  defdelegate whoami(), to: Api.Whoami
   defdelegate whois(params), to: Api.Whois
 end
