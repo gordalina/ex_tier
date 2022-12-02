@@ -18,6 +18,10 @@ def deps do
 end
 ```
 
+### Versioning
+
+ExTier follow's Tier's major and minor versions, but reserves minor versions for ExTier's patch updates. So Tier's `v0.6` version will map to ExTier `0.6.x` version.
+
 ## Configuration
 
 ### URL
