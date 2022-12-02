@@ -7,6 +7,7 @@ defmodule ExTier do
 
   defdelegate limit(params), to: Api.Limits
   defdelegate limits(params), to: Api.Limits
+  defdelegate lookup(params), to: Api.Lookup
   defdelegate phase(params), to: Api.Phase
   defdelegate pull(), to: Api.Pull
   defdelegate pull_latest(), to: Api.Pull

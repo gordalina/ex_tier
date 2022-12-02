@@ -8,7 +8,7 @@ defmodule ExTier.Api.Whois do
   @doc """
   Get Stripe's customer id from an organization
 
-      {:ok, %ExTier.Whois{}} = ExTier.schedule(%{org: "org:org_id"})
+      {:ok, %ExTier.Whois{}} = ExTier.whois(%{org: "org:org_id"})
 
   """
   @spec whois(whois_params) :: {:ok, Whois.t()} | {:error, String.t()}
