@@ -19,4 +19,17 @@ defmodule ExTier.Api.SubscribeTest do
     features = ["feature:IncomingMessage", "feature:IncomingMessage"]
     assert :ok = ExTier.subscribe(%{org: "org:o", features: features, effective: dt})
   end
+
+  test "subscribe/1 with only org info" do
+    params = %{
+      org: "org:o",
+      email: "org@example.com",
+      description: "org",
+      name: "organization",
+      phone: "+1 (555) 123-8000",
+      metadata: %{"id" => "org:o"}
+    }
+
+    assert :ok = ExTier.subscribe(params)
+  end
 end
