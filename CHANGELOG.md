@@ -1,4 +1,4 @@
-## Next
+## v0.6.0
 
 - Add `ExTier.lookup/1` endpoint
 - Add `info` property in `ExTier.subscribe/1` endpoint

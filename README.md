@@ -13,7 +13,7 @@ The package can be installed by adding `ex_tier` to your list of dependencies in
 ```elixir
 def deps do
   [
-    {:ex_tier, "~> 0.0"}
+    {:ex_tier, "~> 0.6"}
   ]
 end
 ```
