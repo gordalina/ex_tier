@@ -1,6 +1,6 @@
 # ExTier
 
-[![Build Status](https://img.shields.io/github/workflow/status/gordalina/ex_tier/ci?style=flat-square)](https://github.com/gordalina/ex_tier/actions?query=workflow%3A%22ci%22)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/gordalina/ex_tier/ci.yml?branch=main&style=flat-square)](https://github.com/gordalina/ex_tier/actions?query=workflow%3A%22ci%22)
 [![Coverage Status](https://img.shields.io/codecov/c/github/gordalina/ex_tier?style=flat-square)](https://app.codecov.io/gh/gordalina/ex_tier)
 [![hex.pm version](https://img.shields.io/hexpm/v/ex_tier?style=flat-square)](https://hex.pm/packages/ex_tier)
 
