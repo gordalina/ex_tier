@@ -1,3 +1,7 @@
+## Next
+
+- Add `ExTier.Push.log/2` and `ExTier.PushResult.log/2`
+
 ## v0.6.0
 
 - Add `ExTier.lookup/1` endpoint

@@ -34,43 +34,43 @@ defmodule ExTier.Api.PushTest do
   }
   """
 
+  @body_already_exists %{
+    "results" => [
+      %{
+        "feature" => "feature:PhoneNumber@plan:basic@2",
+        "reason" => "created",
+        "status" => "ok"
+      },
+      %{
+        "feature" => "feature:IncomingMessage@plan:basic@2",
+        "reason" => "feature already exists",
+        "status" => "failed"
+      },
+      %{
+        "feature" => "feature:OutgoingMessage@plan:basic@2",
+        "reason" => "feature already exists",
+        "status" => "failed"
+      }
+    ]
+  }
+
   setup do
     Tesla.Mock.mock(fn
       %{method: :post} ->
-        body = %{
-          "results" => [
-            %{
-              "feature" => "feature:PhoneNumber@plan:basic@2",
-              "reason" => "feature already exists",
-              "status" => "ok"
-            },
-            %{
-              "feature" => "feature:IncomingMessage@plan:basic@2",
-              "reason" => "feature already exists",
-              "status" => "ok"
-            },
-            %{
-              "feature" => "feature:OutgoingMessage@plan:basic@2",
-              "reason" => "feature already exists",
-              "status" => "ok"
-            }
-          ]
-        }
-
-        %Tesla.Env{status: 200, body: body}
+        %Tesla.Env{status: 200, body: @body_already_exists}
     end)
 
     :ok
   end
 
-  test "pull/1" do
+  test "push/1" do
     assert {:ok, %Push{} = push} = ExTier.push(@json)
     assert 3 == push.results |> length()
 
     [%PushResult{} = result | _] = push.results
 
     assert "feature:PhoneNumber@plan:basic@2" == result.feature
-    assert "feature already exists" == result.reason
+    assert "created" == result.reason
     assert "ok" == result.status
   end
 end
