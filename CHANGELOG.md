@@ -1,4 +1,4 @@
-## Next
+## v0.6.2
 
 - Add `name` to `ExTier.Plan`
 
