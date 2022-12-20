@@ -15,7 +15,7 @@ defmodule ExTier.Model do
     %__MODULE__{
       plans:
         Map.new(params["plans"], fn {name, plan} ->
-          {name, plan |> Map.put("name", name) |> Plan.new()}
+          {name, plan |> Map.put("plan", name) |> Plan.new()}
         end)
     }
   end

@@ -1,6 +1,6 @@
 ## v0.6.2
 
-- Add `name` to `ExTier.Plan`
+- Add `plan` to `ExTier.Plan`
 
 ## v0.6.1
 

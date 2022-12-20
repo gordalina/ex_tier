@@ -70,7 +70,7 @@ defmodule ExTier.Api.PullTest do
       assert 33 == model.plans |> Map.keys() |> length()
 
       plan = model.plans["plan:basic@0"]
-      assert "plan:basic@0" == plan.name
+      assert "plan:basic@0" == plan.plan
       assert "Basic" == plan.title
       assert %Feature{tiers: [%FeatureTier{price: 8}]} = plan.features["feature:IncomingMessage"]
     end
@@ -80,7 +80,7 @@ defmodule ExTier.Api.PullTest do
       assert 1 == model.plans |> Map.keys() |> length()
 
       plan = model.plans["plan:basic"]
-      assert "plan:basic@32" == plan.name
+      assert "plan:basic@32" == plan.plan
       assert "Basic" == plan.title
       assert %Feature{tiers: [%FeatureTier{price: 7}]} = plan.features["feature:IncomingMessage"]
     end
