@@ -1,3 +1,7 @@
+## Next
+
+- Add `name` to `ExTier.Plan`
+
 ## v0.6.1
 
 - Add `ExTier.Push.log/2` and `ExTier.PushResult.log/2`

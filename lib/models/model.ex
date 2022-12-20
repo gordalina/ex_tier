@@ -13,7 +13,10 @@ defmodule ExTier.Model do
   @spec new(map()) :: t
   def new(params) do
     %__MODULE__{
-      plans: Map.new(params["plans"], fn {name, plan} -> {name, Plan.new(plan)} end)
+      plans:
+        Map.new(params["plans"], fn {name, plan} ->
+          {name, plan |> Map.put("name", name) |> Plan.new()}
+        end)
     }
   end
 end
