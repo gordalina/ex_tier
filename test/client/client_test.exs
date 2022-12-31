@@ -18,7 +18,9 @@ defmodule ExTier.Client.ResponseMiddlewareTest do
     end
 
     test "invalid code" do
-      assert capture_log(fn -> assert {:error, "invalid"} = Client.get("/") end) =~ "ExTier: GET"
+      assert capture_log(fn ->
+               assert {:error, %ExTier.Error{status: 400, code: "invalid"}} = Client.get("/")
+             end) =~ "ExTier: GET"
     end
   end
 

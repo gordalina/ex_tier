@@ -68,7 +68,8 @@ defmodule ExTier.Api.LimitsTest do
     end
 
     test "limit/1" do
-      assert {:error, "invalid"} == ExTier.limit(%{org: "org:o", feature: "feature:f3"})
+      assert {:error, %ExTier.Error{status: 400, code: "invalid"}} ==
+               ExTier.limit(%{org: "org:o", feature: "feature:f3"})
     end
   end
 end

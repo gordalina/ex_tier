@@ -1,6 +1,6 @@
 defmodule ExTier.Api.Pull do
   @moduledoc ""
-  alias ExTier.{Client, Model, Utils}
+  alias ExTier.{Client, Error, Model, Utils}
 
   @doc """
   Get all pricing plans
@@ -8,7 +8,7 @@ defmodule ExTier.Api.Pull do
       {:ok, %ExTier.Model{}} = ExTier.pull()
 
   """
-  @spec pull() :: {:ok, Model.t()} | {:error, String.t()}
+  @spec pull() :: {:ok, Model.t()} | {:error, Error.t()}
   def pull() do
     Client.get("/pull") |> Utils.cast(Model)
   end
@@ -19,7 +19,7 @@ defmodule ExTier.Api.Pull do
       {:ok, %ExTier.Model{}} = ExTier.pull_latest()
 
   """
-  @spec pull_latest() :: {:ok, Model.t()} | {:error, String.t()}
+  @spec pull_latest() :: {:ok, Model.t()} | {:error, Error.t()}
   def pull_latest() do
     with {:ok, %Model{plans: plans}} <- pull(),
          latest <- Enum.reduce(plans, %{}, &latest_plan_version/2),

@@ -1,5 +1,5 @@
 defmodule ExTier.Api.Limits do
-  alias ExTier.{Client, Limits, Usage, Utils}
+  alias ExTier.{Client, Error, Limits, Usage, Utils}
 
   @type limits_params :: %{
           :org => String.t()
@@ -16,7 +16,7 @@ defmodule ExTier.Api.Limits do
       {:ok, %ExTier.Usage{}} = ExTier.limit(%{org: "org:org_id"})
 
   """
-  @spec limits(limits_params) :: {:ok, Limits.t()} | {:error, String.t()}
+  @spec limits(limits_params) :: {:ok, Limits.t()} | {:error, Error.t()}
   def limits(params) do
     Client.get("/limits", query: params) |> Utils.cast(Limits)
   end
@@ -27,7 +27,7 @@ defmodule ExTier.Api.Limits do
       {:ok, %ExTier.Usage{}} = ExTier.limit(%{org: "org:org_id", feature: "feature:feature_name"})
 
   """
-  @spec limit(limit_params) :: {:ok, Usage.t()} | {:error, String.t()}
+  @spec limit(limit_params) :: {:ok, Usage.t()} | {:error, Error.t()}
   def limit(params) do
     with {:ok, regex} <- Regex.compile("^#{params.feature}(@plan:.+)?$"),
          {:ok, limits} <- params |> Map.drop([:feature]) |> limits() do

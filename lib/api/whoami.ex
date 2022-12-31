@@ -1,5 +1,5 @@
 defmodule ExTier.Api.Whoami do
-  alias ExTier.{Client, Utils, Whoami}
+  alias ExTier.{Client, Error, Utils, Whoami}
 
   @doc """
   Get Stripe's customer id from an organization
@@ -7,7 +7,7 @@ defmodule ExTier.Api.Whoami do
       {:ok, %ExTier.Whois{}} = ExTier.schedule(%{org: "org:org_id"})
 
   """
-  @spec whoami() :: {:ok, Whoami.t()} | {:error, String.t()}
+  @spec whoami() :: {:ok, Whoami.t()} | {:error, Error.t()}
   def whoami() do
     Client.get("/whoami") |> Utils.cast(Whoami)
   end

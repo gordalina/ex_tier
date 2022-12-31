@@ -1,5 +1,5 @@
 defmodule ExTier.Api.Phase do
-  alias ExTier.{Client, CurrentPhase, Utils}
+  alias ExTier.{Client, CurrentPhase, Error, Utils}
 
   @type phase_params :: %{
           org: String.t()
@@ -11,7 +11,7 @@ defmodule ExTier.Api.Phase do
       {:ok, %ExTier.CurrentPhase{}} = ExTier.phase(%{org: "org:org_id"})
 
   """
-  @spec phase(phase_params) :: {:ok, CurrentPhase.t()} | {:error, String.t()}
+  @spec phase(phase_params) :: {:ok, CurrentPhase.t()} | {:error, Error.t()}
   def phase(params) do
     Client.get("/phase", query: params) |> Utils.cast(CurrentPhase)
   end

@@ -1,5 +1,5 @@
 defmodule ExTier.Api.Lookup do
-  alias ExTier.{Client, Utils, Lookup}
+  alias ExTier.{Client, Error, Utils, Lookup}
 
   @type lookup_params :: %{
           :org => String.t()
@@ -11,7 +11,7 @@ defmodule ExTier.Api.Lookup do
       {:ok, %ExTier.Lookup{}} = ExTier.lookup(%{org: "org:org_id"})
 
   """
-  @spec lookup(lookup_params) :: {:ok, Lookup.t()} | {:error, String.t()}
+  @spec lookup(lookup_params) :: {:ok, Lookup.t()} | {:error, Error.t()}
   def lookup(params) do
     Client.get("/whois", query: Map.put(params, :include, "info")) |> Utils.cast(Lookup)
   end

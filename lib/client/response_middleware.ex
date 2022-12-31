@@ -19,7 +19,8 @@ defmodule ExTier.Client.ResponseMiddleware do
   defp handle_response({:ok, %{status: status, body: body} = env}) do
     method = env.method |> Atom.to_string() |> String.upcase()
     Logger.error("ExTier: #{method} #{env.url} -> #{status}", error_metadata(env))
-    {:error, body["code"]}
+    error = %ExTier.Error{code: body["code"], message: body["message"], status: status}
+    {:error, error}
   end
 
   defp error_metadata(%Tesla.Env{} = env) do

@@ -1,5 +1,5 @@
 defmodule ExTier.Api.Report do
-  alias ExTier.Client
+  alias ExTier.{Client, Error}
 
   @type report_params :: %{
           :org => String.t(),
@@ -15,7 +15,7 @@ defmodule ExTier.Api.Report do
       :ok = ExTier.report(%{org: "org:org_id", feature: "feature:feature"})
 
   """
-  @spec report(report_params) :: :ok | {:error, String.t()}
+  @spec report(report_params) :: :ok | {:error, Error.t()}
   def report(params) do
     params =
       params

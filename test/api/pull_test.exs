@@ -1,7 +1,7 @@
 defmodule ExTier.Api.PullTest do
   use ExUnit.Case
 
-  alias ExTier.{Model, Plan, Feature, FeatureTier}
+  alias ExTier.{Model, Feature, FeatureTier}
 
   @body %{
     "plans" => %{
@@ -97,7 +97,7 @@ defmodule ExTier.Api.PullTest do
     end
 
     test "pull_latest/0" do
-      assert {:error, "invalid"} == ExTier.pull_latest()
+      assert {:error, %ExTier.Error{status: 400, code: "invalid"}} == ExTier.pull_latest()
     end
   end
 end

@@ -1,5 +1,5 @@
 defmodule ExTier.Api.Whois do
-  alias ExTier.{Client, Utils, Whois}
+  alias ExTier.{Client, Error, Utils, Whois}
 
   @type whois_params :: %{
           :org => String.t()
@@ -11,7 +11,7 @@ defmodule ExTier.Api.Whois do
       {:ok, %ExTier.Whois{}} = ExTier.whois(%{org: "org:org_id"})
 
   """
-  @spec whois(whois_params) :: {:ok, Whois.t()} | {:error, String.t()}
+  @spec whois(whois_params) :: {:ok, Whois.t()} | {:error, Error.t()}
   def whois(params) do
     Client.get("/whois", query: params) |> Utils.cast(Whois)
   end

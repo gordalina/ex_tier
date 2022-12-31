@@ -1,5 +1,5 @@
 defmodule ExTier.Api.Subscribe do
-  alias ExTier.{Client, OrgInfo, Phase}
+  alias ExTier.{Client, Error, OrgInfo, Phase}
 
   @type subscribe_features_params :: %{
           :org => String.t(),
@@ -25,7 +25,7 @@ defmodule ExTier.Api.Subscribe do
       :ok = ExTier.schedule(%{org: "org:org_id", info: %{email: "org@example.com"}})
 
   """
-  @spec subscribe(subscribe_params) :: :ok | {:error, String.t()}
+  @spec subscribe(subscribe_params) :: :ok | {:error, Error.t()}
   def subscribe(%{features: features} = params) when not is_list(features) do
     params
     |> Map.replace_lazy(:features, &List.wrap/1)

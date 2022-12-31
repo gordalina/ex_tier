@@ -1,5 +1,5 @@
 defmodule ExTier.Api.Schedule do
-  alias ExTier.{Client, Phase}
+  alias ExTier.{Client, Error, Phase}
 
   @type schedule_params :: %{
           :org => String.t(),
@@ -12,7 +12,7 @@ defmodule ExTier.Api.Schedule do
       :ok = ExTier.schedule(%{org: "org:org_id", phases: [%{features: ["feature:feature"]}]})
 
   """
-  @spec schedule(schedule_params) :: :ok | {:error, String.t()}
+  @spec schedule(schedule_params) :: :ok | {:error, Error.t()}
   def schedule(%{phases: _} = params) do
     Client.post("/subscribe", params)
   end
