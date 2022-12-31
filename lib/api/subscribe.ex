@@ -5,6 +5,7 @@ defmodule ExTier.Api.Subscribe do
           :org => String.t(),
           :features => Phase.features() | [Phase.features()],
           :effective => DateTime.t(),
+          optional(:trial) => boolean(),
           optional(:info) => OrgInfo.t()
         }
 
@@ -12,10 +13,27 @@ defmodule ExTier.Api.Subscribe do
           :org => String.t(),
           optional(:features) => Phase.features() | [Phase.features()],
           optional(:effective) => DateTime.t(),
+          optional(:trial) => boolean(),
           :info => OrgInfo.t()
         }
 
-  @type subscribe_params :: subscribe_features_params() | subscribe_features_info()
+  @type subscribe_phases_params :: %{
+          :org => String.t(),
+          :phases => Phase.t() | [Phase.t()],
+          optional(:info) => OrgInfo.t()
+        }
+
+  @type subscribe_phases_info :: %{
+          :org => String.t(),
+          optional(:phases) => Phase.t() | [Phase.t()],
+          :info => OrgInfo.t()
+        }
+
+  @type subscribe_params ::
+          subscribe_features_params()
+          | subscribe_features_info()
+          | subscribe_phases_params()
+          | subscribe_phases_info()
 
   @doc """
   Subscribe an organization to a plan or a set of features
@@ -33,13 +51,19 @@ defmodule ExTier.Api.Subscribe do
   end
 
   def subscribe(%{features: _} = params) do
-    phases = Map.take(params, [:features, :effective])
+    phases = Map.take(params, [:features, :effective, :trial])
 
     params =
       %{org: params.org}
       |> Map.put(:phases, [phases])
 
     Client.post("/subscribe", params)
+  end
+
+  def subscribe(%{phases: phases} = params) when not is_list(phases) do
+    params
+    |> Map.replace_lazy(:phases, &List.wrap/1)
+    |> subscribe()
   end
 
   def subscribe(params) do

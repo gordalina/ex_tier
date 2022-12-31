@@ -1,6 +1,6 @@
 defmodule ExTier.Phase do
   @moduledoc false
-  defstruct [:effective, :features]
+  defstruct [:effective, :features, :trial]
 
   @type plan_name :: String.t()
   @type versioned_feature_name :: String.t()
@@ -8,6 +8,7 @@ defmodule ExTier.Phase do
 
   @type t :: %__MODULE__{
           effective: DateTime.t(),
-          features: [features()]
+          features: [features()],
+          trial: boolean()
         }
 end

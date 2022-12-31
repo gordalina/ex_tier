@@ -20,6 +20,15 @@ defmodule ExTier.Api.SubscribeTest do
     assert :ok = ExTier.subscribe(%{org: "org:o", features: features, effective: dt})
   end
 
+  test "subscribe/1 with phase" do
+    phase = %{
+      features: ["feature:IncomingMessage", "feature:IncomingMessage"],
+      effective: DateTime.utc_now()
+    }
+
+    assert :ok = ExTier.subscribe(%{org: "org:o", phases: phase})
+  end
+
   test "subscribe/1 with only org info" do
     params = %{
       org: "org:o",
