@@ -26,10 +26,18 @@ ExTier follow's Tier's major and minor versions, but reserves minor versions for
 
 ### URL
 
-You need to specify where does the Tier server is reachable:
+You need to specify where the Tier server is reachable at:
 
 ```elixir
 config :ex_tier, url: "http://localhost:8080"
+```
+
+### Test Clocks
+
+To use test clocks, pass the clock_id in the configuration:
+
+```elixir
+config :ex_tier, clock_id: "clock_1xTl3FbwSFVVY4blLTlXv2CY"
 ```
 
 ### Tesla
