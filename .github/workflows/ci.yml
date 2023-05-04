@@ -26,7 +26,7 @@ jobs:
     env:
       MIX_ENV: test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
         with:
           otp-version: "${{ matrix.otp }}"
@@ -56,7 +56,7 @@ jobs:
           - otp: "25.x"
             elixir: "1.14.x"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
         with:
           otp-version: "${{ matrix.otp }}"
@@ -80,7 +80,7 @@ jobs:
           - otp: "25.x"
             elixir: "1.14.x"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
         with:
           otp-version: "${{ matrix.otp }}"
@@ -106,7 +106,7 @@ jobs:
     env:
       HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: erlef/setup-beam@v1
         with:
           otp-version: "${{ matrix.otp }}"
