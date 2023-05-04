@@ -13,6 +13,7 @@ defmodule ExTier.Client do
     apply(adapter, :call, [env, opts])
   end)
 
+  plug(ExTier.Client.TierCloudMiddleware)
   plug(ExTier.Client.ClockMiddleware)
   plug(ExTier.Client.ResponseMiddleware)
   plug(Tesla.Middleware.BaseUrl, "#{Application.fetch_env!(:ex_tier, :url)}/v1")

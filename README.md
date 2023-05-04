@@ -20,7 +20,7 @@ end
 
 ### Versioning
 
-ExTier follow's Tier's major and minor versions, but reserves minor versions for ExTier's patch updates. So Tier's `v0.6` version will map to ExTier `0.6.x` version.
+ExTier follows Tier's major and minor versions, but reserves minor versions for ExTier's patch updates. So Tier's `v0.6` version will map to ExTier `0.6.x` version.
 
 ## Configuration
 
@@ -30,6 +30,16 @@ You need to specify where the Tier server is reachable at:
 
 ```elixir
 config :ex_tier, url: "http://localhost:8080"
+```
+
+### Tier Cloud
+
+You can use tier cloud by using the following configuration:
+
+```elixir
+config :ex_tier,
+  url: "https://api.tier.run",
+  stripe_api_key: "your-stripe-api-key"
 ```
 
 ### Test Clocks
